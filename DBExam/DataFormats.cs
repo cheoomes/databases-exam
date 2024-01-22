@@ -23,6 +23,11 @@ namespace DataFormats {
     //----Question 3-----
 
     public record BookingOverview(List<Tuple<string, string>> FlightDetails, decimal TotalFare);
+        public 
+
+
+
+
 
 
     //----Question 4-----

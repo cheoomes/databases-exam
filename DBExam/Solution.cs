@@ -25,18 +25,9 @@ class Solution{
             where ticket.Name == person
             select new BoardingPassWithName(b, ticket.Name);
 
-        //The name 'b' is not in scope on the right side of 'equals'.  Consider swapping the expressions on either side of 'equals'.
         return q; 
 
     }
-
-
-
-
-
-
-
-
 
 
 
@@ -44,10 +35,52 @@ class Solution{
     //    List of Tuples containing Departure and Arrival airports (FlightDetails); 
     //    Calculate the total fare of given booking (TotalFare).
     public static BookingOverview Q3(FlightContext db, int booking) {   
-           
-        return (new BookingOverview(new List<Tuple<string, string>>(), 0));  //this line of code should be changed    
+        q = (from ticket in db.Tickets
+            where ticket.BookingRef == booking   
+            //tickets with bookingref the correct ones
+            join boarding in db.BoardingPasses on ticket.Id equals boarding.TicketID
+            //join ticket on to boardinf pass
+            //where 
+
+            join flight in db.Flights on boarding.FlightID equals flight.Id
+               // where boarding.TicketID == ticket.Id
+
+            select new Tuple<string, string>(flight.DepartureAirport, flight.ArrivalAirport);
+
+            var flightDetails = q.ToList();
+
+
+
+            decimal totalFare = (
+                from boarding in db.BoardingPasses
+                where boarding.TicketID. == booking 
+                select ticket.Fare
+            ).Sum();
+
+    return new BookingOverview(flightDetails, totalFare);
+
+            //boarding passes with tickets, needs to be a joing
+
+            //from ticket to ticket Id inboarding pass
+
+        return q;  //this line of code should be changed    
         
     }
+
+
+
+
+
+
+            
+
+    
+
+
+
+
+
+
 
     //Q4: List down number of seats booked (TotalSeats) per flight (FlightID)  [SeatsInFlight]
     //    do not forget to include flights with no Boarding passes issued (no seats booked), 

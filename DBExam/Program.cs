@@ -20,28 +20,28 @@ using (var db = new FlightContext())
    
     // //TestQ2
     
-    Console.WriteLine("\n---Q2----");
-    var numOfTickets = db.Tickets.Count();
-    var name = db.Tickets.Skip(numOfTickets / 2 + rand.Next(-2, 3)).Take(1).Select(_ => _.Name).ToList().FirstOrDefault();
-    Console.WriteLine($"Boardingpasses for person {name}");
-    if (name != null) {
-      var res = Solution.Q2(db, name);
-      res?.ToList().ForEach(_ => Console.WriteLine(_)); 
-    }
+    // Console.WriteLine("\n---Q2----");
+    // var numOfTickets = db.Tickets.Count();
+    // var name = db.Tickets.Skip(numOfTickets / 2 + rand.Next(-2, 3)).Take(1).Select(_ => _.Name).ToList().FirstOrDefault();
+    // Console.WriteLine($"Boardingpasses for person {name}");
+    // if (name != null) {
+    //   var res = Solution.Q2(db, name);
+    //   res?.ToList().ForEach(_ => Console.WriteLine(_)); 
+    // }
     
     // //TestQ3
     
-    // Console.WriteLine("\n---Q3----");
-    // var bookingNumberCount = db.Bookings.Count();
-    // var bookingId = bookingNumberCount / 2 + rand.Next(-3, 3);
+    Console.WriteLine("\n---Q3----");
+    var bookingNumberCount = db.Bookings.Count();
+    var bookingId = bookingNumberCount / 2 + rand.Next(-3, 3);
     
-    // Console.WriteLine($"\nBookingID: {bookingId}");
-    // var resQ3 = Solution.Q3(db, bookingId);
-    // var i = 1;
-    // if (resQ3 != null) {
-    //   resQ3?.FlightDetails.ForEach(_ => Console.WriteLine($"Flight{i++} Departure:{_.Item1} -> Arrival:{_.Item2}"));
-    //   Console.WriteLine($"TotalFare: {resQ3.TotalFare}");
-    // } 
+    Console.WriteLine($"\nBookingID: {bookingId}");
+    var resQ3 = Solution.Q3(db, bookingId);
+    var i = 1;
+    if (resQ3 != null) {
+      resQ3?.FlightDetails.ForEach(_ => Console.WriteLine($"Flight{i++} Departure:{_.Item1} -> Arrival:{_.Item2}"));
+      Console.WriteLine($"TotalFare: {resQ3.TotalFare}");
+    } 
     
     // //TestQ4
     
