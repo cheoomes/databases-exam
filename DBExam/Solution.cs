@@ -2,19 +2,43 @@
 class Solution{
 
     //Q1: Select all the outbound and inbound flights at given airport, the arrival time should be used to order the result.
-    public static IQueryable<Flight> Q1(FlightContext db, string airport) {
-        
-        return (new List<Flight>()).AsQueryable();  //this line of code should be changed 
+    public static IQueryable<Flight> Q1(FlightContext db, string airport)
+    {
+        var q = from f in db.Flights
+
+                where f.ArrivalAirport.ToLower().Contains(airport.ToLower())
+                 || f.DepartureAirport.ToLower().Contains(airport.ToLower())
+                orderby f.ArrivalTime ascending
+                select f;
+
+        return q;
 
     }
+
 
     //Q2: For given person name 
     //    find the boarding passes (flight id, Ticket id, fare, seat number and issue date) with passenger name [BoardingPassWithName].
     public static IQueryable<BoardingPassWithName> Q2(FlightContext db, string person) {
         
-        return (new List<BoardingPassWithName>()).AsQueryable();  //this line of code should be changed 
-        
+        var q = from b in db.BoardingPasses
+            join ticket in db.Tickets on b.TicketID equals ticket.Id
+            where ticket.Name == person
+            select new BoardingPassWithName(b, ticket.Name);
+
+        //The name 'b' is not in scope on the right side of 'equals'.  Consider swapping the expressions on either side of 'equals'.
+        return q; 
+
     }
+
+
+
+
+
+
+
+
+
+
 
     //Q3: Returns an instance of BookingOverview for a given booking: 
     //    List of Tuples containing Departure and Arrival airports (FlightDetails); 
